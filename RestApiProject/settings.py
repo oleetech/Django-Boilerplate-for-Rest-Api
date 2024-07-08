@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework_simplejwt.token_blacklist',
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
@@ -50,16 +52,21 @@ MIDDLEWARE = [
 ]
 
 REST_FRAMEWORK = {
-    # ...
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
     ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
 }
 
+from datetime import timedelta
+
 SIMPLE_JWT = {
-    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
-    'TOKEN_TTL': 3600,  # Token expires after 1 hour
-    'REFRESH_TOKEN_TTL': 10800,  # Refresh token expires after 3 hours
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
 }
 ROOT_URLCONF = 'RestApiProject.urls'
 
