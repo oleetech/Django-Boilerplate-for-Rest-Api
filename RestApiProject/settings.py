@@ -49,6 +49,18 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+REST_FRAMEWORK = {
+    # ...
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+SIMPLE_JWT = {
+    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
+    'TOKEN_TTL': 3600,  # Token expires after 1 hour
+    'REFRESH_TOKEN_TTL': 10800,  # Refresh token expires after 3 hours
+}
 ROOT_URLCONF = 'RestApiProject.urls'
 
 TEMPLATES = [
